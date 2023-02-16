@@ -1,7 +1,5 @@
 #!/bin/bash
 
-# It's kind of like ifstat or iostat, but for macOS wifi.
-
 if [ $(id -u) -ne 0 ]; then
     echo "Please run the script with the sudo command to see the BSSID (AP MAC Address)."
 fi
@@ -10,9 +8,11 @@ echo -e "\n\nWireless statistics (press CTRL+C to stop):\n\n"
 
 while true
 do
+
+
     airport_output=$(/System/Library/PrivateFrameworks/Apple80211.framework/Versions/Current/Resources/airport -I)
 
-    # extract values
+    # extract SSID and BSSID values
     ssid=$(echo "$airport_output" | grep -E "^ +SSID: " | awk '{print $2}')
     bssid=$(echo "$airport_output" | grep -E "^ +BSSID: " | awk '{print $2}')
     rssi=$(echo "$airport_output" | grep -E "^ +agrCtlRSSI: " | awk '{print $2}')
@@ -30,7 +30,6 @@ do
         wirelessBand="5 GHz"
     fi
 
-    # print the values to confirm they are stored in the variables
-    echo "Signal Strength: $rssi_pct% | Noise: $noise_pct% | TX Rate: $txrate/$maxrate Mbps | RX Rate: $receiveRate Mbps | Band: $wirelessBand | Channel: $channel | AP: $bssid"
+    echo "Signal Strength: $rssi_pct% | Noise: $noise_pct% | TX Rate: $txrate/$maxrate Mbps | Band: $wirelessBand | Channel: $channel | AP: $bssid"
     sleep 1
 done
