@@ -27,9 +27,12 @@ defaults write -g InitialKeyRepeat -int 10
 # Always show scrollbars
 defaults write -g AppleShowScrollBars -string "Always"
 
-# Disable the unnatural "natural" scrolling
+# Always show scroll bars in applications
 defaults write -g AppleShowScrollBars -string "Always"
 
 # Disable prompt to reopen windows after rebooting
 defaults write com.apple.loginwindow TALLogoutSavesState -bool false
 defaults write com.apple.loginwindow LoginwindowLaunchesRelaunchApps -bool false
+
+# Remove screenshot drop shadows
+defaults write com.apple.screencapture disable-shadow -bool true ; killall SystemUIServer
